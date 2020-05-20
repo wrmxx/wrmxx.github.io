@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一、Git工作流程工作目录-&gt;暂存区-&gt;Git仓库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git和GitHub的基本使用">
+<meta property="og:url" content="http://yoursite.com/2020/05/20/Git%E5%92%8CGitHub%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="WRM">
+<meta property="og:description" content="一、Git工作流程工作目录-&gt;暂存区-&gt;Git仓库">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200308202617530.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200308204706203.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200308205225572.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200308213558344.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200308214933759.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200308215020926.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200308215044703.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200309155725143.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200309155742188.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200309155804939.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200309155933942.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-05-20T07:54:33.182Z">
+<meta property="article:modified_time" content="2020-05-20T08:31:58.977Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200308202617530.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/20/Git%E5%92%8CGitHub%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Git和GitHub的基本使用 | WRM</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">WRM</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/Git%E5%92%8CGitHub%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rabbit.jpg">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WRM">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git和GitHub的基本使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-20 15:54:33 / 修改时间：16:31:58" itemprop="dateCreated datePublished" datetime="2020-05-20T15:54:33+08:00">2020-05-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="一、Git工作流程"><a href="#一、Git工作流程" class="headerlink" title="一、Git工作流程"></a>一、Git工作流程</h2><p>工作目录-&gt;暂存区-&gt;Git仓库</p>
+<a id="more"></a>
+<h2 id="二、Git使用前的配置"><a href="#二、Git使用前的配置" class="headerlink" title="二、Git使用前的配置"></a>二、Git使用前的配置</h2><p>1.配置提交人姓名：git config –global user.name 提交人姓名（昵称）<br>    2.配置提交人邮箱：git config –global user.email 提交人邮箱<br>    3.查看Git配置:   git config –list<br>    如果想要重新修改姓名/邮箱，再次执行上述命令即可</p>
+<h2 id="三、提交步骤"><a href="#三、提交步骤" class="headerlink" title="三、提交步骤"></a>三、提交步骤</h2><p>   1.初始化仓库：git init<br>   2.查看文件状态：git status<br>   2.添加文件到暂存区：git add 要提交的文件名称<br>   3.将暂存区中的文件提交到git仓库：git commit -m 提交信息<br>   4.查看提交记录：git log<br><img src="https://img-blog.csdnimg.cn/20200308202617530.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="四、撤销"><a href="#四、撤销" class="headerlink" title="四、撤销"></a>四、撤销</h2><p>   1.用暂存区中的文件覆盖工作目录中的文件：git checkout 文件名称<br>   2.从暂存区中删除文件：git rm –cached 文件名称<br>   3.将git中恢复到指定的更新记录，并且并且覆盖暂存区和工作目录：git reset –hard commitID<br><img src="https://img-blog.csdnimg.cn/20200308204706203.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>   注：该指令执行后，不仅在暂存区和工作目录恢复了B状态，而且也在仓库中删除了B状态之后的状态，在历史提交记录中也只有A,B两次提交<br>   commitID可通过git log 命令得到 <img src="https://img-blog.csdnimg.cn/20200308205225572.png" alt="在这里插入图片描述"></p>
+<h2 id="五、分支"><a href="#五、分支" class="headerlink" title="五、分支"></a>五、分支</h2><p>   当我们第一次向git仓库中提交项目时，git会自动产生一条以时间点为分隔的线，这条线就是分支，分支上每一个时间点都代表一次git提交，git自动产生的这条分支，叫做主分支。git中除了主分支以外还可以创建其他分支。创建其他分支可以让我们从开发主线上分离出来，以免影响开发主线。<br>在开发过程中分支与分支之间是独立的，互不影响。在实际开发的过程中，除了有主分支，开发分支，还会有功能分支，功能分支是基于开发分支创建的，它的作用是开发一个独立的功能，当功能开发完整以后，再将功能分支中的代码合并到开发分支，这支功能分支就可以删除了。<br>   1.查看分支：git branch<br>   当前在哪一个分支上进行的操作，就是基于那一个分支创建分支，就相当基于那一个分支创建副本<br>   2.创建分支：git branch 分支名称<br>   3.切换分支：git checkout 分支名称<br>   注意：在切换分支之前，当前分支上的工作一定要提交到git仓库中，要保持当前分支上的工作区处于完全干净的状态，否则就会出现问题。<br>   4.合并分支：git merge 来源分支<br>   如果是想把A合并到B上，需要先切换回到B上进行合并。<br>   5.删除分支：git branch -d 分支名称<br>   如果要删除的分支没有被合并，默认情况下这个分支是不允许被删除的<br>   6.强制删除分支：git branch -D 分支名称<br>   注意：如果想删除一个分支，则不能再该分支上执行删除代码（强行删除也不可以），必须切换到其他分支上才能进行删除。</p>
+<h2 id="六、暂时保存更改"><a href="#六、暂时保存更改" class="headerlink" title="六、暂时保存更改"></a>六、暂时保存更改</h2><p>   在git中，可以暂时提取分支上所有的改动并存储，让开发人员得到一个干净的工作副本，临时转向其他工作。经常用于分支临时切换。<br>   1.存储临时改动：git stash<br>   2.恢复改动：git stash pop<br>   注意：在A分支上存储，恢复时必须返回A分支</p>
+<h2 id="七、远程仓库"><a href="#七、远程仓库" class="headerlink" title="七、远程仓库"></a>七、远程仓库</h2><p>当多个人同时开发一个项目时，即多个人共享一份代码，本地仓库是完成不了共享的，此时我们需要一个公共仓库。<br>开发人员需要在本地仓库中进行开发，当开发完成以后，将本地仓库中的代码推送到公共仓库中，其他开发人员可以从公共仓库中拉取别人推送的代码，这样就可以实现多人协作开发了。本地仓库位于每一个开发人员的计算机上，相反，公共仓库位于可以被所有开发人员可以访问到的远程服务器上。<br>1.多人协作开发流程：<br>（1）A在自己的计算机中创建本地仓库：在项目文件中打开git<br><img src="https://img-blog.csdnimg.cn/20200308213558344.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>（2）A在GitHub中创建远程仓库：<br><img src="https://img-blog.csdnimg.cn/20200308214933759.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>（3）A将本地仓库推送到远程仓库<br>①<br><img src="https://img-blog.csdnimg.cn/20200308215020926.png" alt="在这里插入图片描述"><br>②<br><img src="https://img-blog.csdnimg.cn/20200308215044703.png" alt="在这里插入图片描述"><br>git push 远程仓库地址 推送分支<br>如果觉得远程仓库的地址过于冗长，可以给远程仓库的地址起一个别名：git remote add 远程仓库别名 远程仓库地址<br>也可以写：git push -u 远程仓库地址别名 分支名称<br>这样，以后就可以直接写gti push<br>③<br>当项目中的文件内容发生变化后，将内容先提交到本地仓库，再推送到远端</p>
+<p>（4）B克隆远程仓库到本地进行开发：git clone 远程仓库地址<br>切换位置：cd 路径<br>清屏：clear<br>注意：，因为B没有权限，此时B是无法向远程仓库中提交代码的，所以需要A邀请B称为该项目的开发者<br>A如何发出邀请：<br><img src="https://img-blog.csdnimg.cn/20200309155725143.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt><br><img src="https://img-blog.csdnimg.cn/20200309155742188.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="1"><br><img src="https://img-blog.csdnimg.cn/20200309155804939.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">)<img src="https://img-blog.csdnimg.cn/20200309155933942.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>然后复制邀请链接，发给B。B登录GitHub之后，复制链接到地址栏，接受邀请即可<br>（5）B将本地仓库中开发的内容推送到远程仓库<br>（6）A将远程仓库中的最新内容拉取到本地<br>拉取远程仓库内容：git pull 远程仓库地址 分支名称<br>注意：如果远程仓库中的版本高于本地仓库，那么是不允许推送到远程仓库的，需要先拉取远程仓库到本地，然后再向远程仓库中进行提交</p>
+<h2 id="八、解决冲突"><a href="#八、解决冲突" class="headerlink" title="八、解决冲突"></a>八、解决冲突</h2><p>在多人开发一个项目时，如果两个人修改了同一个文件的同一个地方，就会发生冲突。冲突需要认为解决，即第二个人需要在本地仓库中把冲突解决掉，然后再向远程仓库中提交。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Git工作流程"><span class="nav-number">1.</span> <span class="nav-text">一、Git工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Git使用前的配置"><span class="nav-number">2.</span> <span class="nav-text">二、Git使用前的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、提交步骤"><span class="nav-number">3.</span> <span class="nav-text">三、提交步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、撤销"><span class="nav-number">4.</span> <span class="nav-text">四、撤销</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、分支"><span class="nav-number">5.</span> <span class="nav-text">五、分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、暂时保存更改"><span class="nav-number">6.</span> <span class="nav-text">六、暂时保存更改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、远程仓库"><span class="nav-number">7.</span> <span class="nav-text">七、远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、解决冲突"><span class="nav-number">8.</span> <span class="nav-text">八、解决冲突</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="John Doe"
+      src="/images/rabbit.jpg">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
