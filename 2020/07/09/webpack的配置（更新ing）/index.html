@@ -20,28 +20,37 @@
     var CONFIG = {"hostname":"wrmxx.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="WRM">
-<meta property="og:url" content="http://wrmxx.github.io/index.html">
+  <meta name="description" content="一、入口和出口的配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack的配置">
+<meta property="og:url" content="http://wrmxx.github.io/2020/07/09/webpack%E7%9A%84%E9%85%8D%E7%BD%AE%EF%BC%88%E6%9B%B4%E6%96%B0ing%EF%BC%89/index.html">
 <meta property="og:site_name" content="WRM">
+<meta property="og:description" content="一、入口和出口的配置">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020070910414036.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200709113148504.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200709144410247.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-07-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-07-09T06:52:01.248Z">
 <meta property="article:author" content="WRM">
+<meta property="article:tag" content="webpack">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2020070910414036.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
 
-<link rel="canonical" href="http://wrmxx.github.io/">
+<link rel="canonical" href="http://wrmxx.github.io/2020/07/09/webpack%E7%9A%84%E9%85%8D%E7%BD%AE%EF%BC%88%E6%9B%B4%E6%96%B0ing%EF%BC%89/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>WRM</title>
+  <title>webpack的配置 | WRM</title>
   
 
 
@@ -155,9 +164,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -173,10 +183,9 @@
       <meta itemprop="name" content="WRM">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/09/webpack%E7%9A%84%E9%85%8D%E7%BD%AE%EF%BC%88%E6%9B%B4%E6%96%B0ing%EF%BC%89/" class="post-title-link" itemprop="url">webpack的配置</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          webpack的配置
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -199,6 +208,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -209,353 +225,106 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
-          <h2 id="一、入口和出口的配置"><a href="#一、入口和出口的配置" class="headerlink" title="一、入口和出口的配置"></a>一、入口和出口的配置</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/09/webpack%E7%9A%84%E9%85%8D%E7%BD%AE%EF%BC%88%E6%9B%B4%E6%96%B0ing%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+        <h2 id="一、入口和出口的配置"><a href="#一、入口和出口的配置" class="headerlink" title="一、入口和出口的配置"></a>一、入口和出口的配置</h2><a id="more"></a>
+<p>1.在项目的根目录下新建一个webpack.config.js（用来存放一些有关webpack的一些配置）文件</p>
+<p>2.项目当中如果用到node相关的东西的话，需要进行初始化npm init(-y),之后会生成package.json 文件</p>
+<p>3.过commonJS的方式导出一个对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">"./src/main.js"</span>,<span class="comment">//入口</span></span><br><span class="line">    output: &#123;<span class="comment">//出口</span></span><br><span class="line">        path: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filename: <span class="string">"bundle.js"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.在终端直接执行webpack即可</p>
+<h2 id="二、webpack局部安装"><a href="#二、webpack局部安装" class="headerlink" title="二、webpack局部安装"></a>二、webpack局部安装</h2><p>1.安装本地webpack<br>cnpm install <a href="mailto:webpack@3.6.0">webpack@3.6.0</a> –save-dev(运行时依赖)</p>
+<p>2.npm映射<br>在初始化之后（npm init）打开package.json，找到scripts字段，在该对象里加入属性：”要替代的指令”，执行指令则执行npm run 属性<br>例如： webpack被替代为build。替代后的执行指令为npm run build </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"exit"</span>,</span><br><span class="line">    <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">    <span class="string">"description"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"main"</span>: <span class="string">"webpack.config.js"</span>,</span><br><span class="line">    <span class="string">"scripts"</span>: &#123;</span><br><span class="line">        <span class="string">"test"</span>: <span class="string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span>,</span><br><span class="line">        <span class="string">"build"</span>: <span class="string">"webpack"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"author"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"license"</span>: <span class="string">"ISC"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/2020070910414036.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>写完该脚本之后，在执行指令时优先寻找本地的webpack</p>
+<p>3.在终端里（cmd/编译器自带的终端等）敲的命令都是全局的，若果想用本地的，必须要找到本地的webpack文件，但是npm映射之后就不用了，这也是npm映射的好处之一</p>
+<h2 id="三、webpack中使用css文件的配置"><a href="#三、webpack中使用css文件的配置" class="headerlink" title="三、webpack中使用css文件的配置"></a>三、webpack中使用css文件的配置</h2><p>使用loader过程：<br>1.通过npm安装需要的loader</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev style-loader</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev css-loader</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20200709113148504.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>（如果觉得npm太慢，可以使用淘宝镜像cnpm）</p>
+<p>建立自己的css文件，例如我建立的是normal.css</p>
+<p>2.在入口文件加入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"./css/normal.css"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>3.在webpack.config.js的modules关键字下进行配置<br>（大部分的loader都可以在<a href="https://webpack.js.org/loaders" target="_blank" rel="noopener">webpack的官网</a>中找到，并且学习对应的用法）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">"./src/main.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filename: <span class="string">"bundle.js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [&#123;</span><br><span class="line">            test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">            <span class="comment">// css-loader值负责将css文件进行加载</span></span><br><span class="line">            <span class="comment">// style-loader负责将样式添加到DOM中</span></span><br><span class="line">            use: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>],</span><br><span class="line">        &#125;, ],</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：使用多个loader时，是从右往左读的<br>3.执行 npm run build，在index.html中引用如下：<br><img src="https://img-blog.csdnimg.cn/20200709144410247.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
     </div>
 
     
     
     
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="WRM 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="WRM 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>WRM
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wrmxx.github.io/2020/07/09/webpack%E7%9A%84%E9%85%8D%E7%BD%AE%EF%BC%88%E6%9B%B4%E6%96%B0ing%EF%BC%89/" title="webpack的配置">http://wrmxx.github.io/2020/07/09/webpack的配置（更新ing）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/webpack/" rel="tag"># webpack</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wrmxx.github.io/2020/07/05/Vue%E7%BB%84%E4%BB%B6%E6%97%A0%E6%B3%95%E7%94%9F%E6%95%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/rabbit.jpg">
-      <meta itemprop="name" content="WRM">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WRM">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/05/Vue%E7%BB%84%E4%BB%B6%E6%97%A0%E6%B3%95%E7%94%9F%E6%95%88/" class="post-title-link" itemprop="url">Vue组件无法生效</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-07-05 00:00:00 / 修改时间：11:14:45" itemprop="dateCreated datePublished" datetime="2020-07-05T00:00:00+08:00">2020-07-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index"><span itemprop="name">Vue.js</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
         
-          <p>1.没有实例化某个Vue对象</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/05/Vue%E7%BB%84%E4%BB%B6%E6%97%A0%E6%B3%95%E7%94%9F%E6%95%88/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
+
+
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/05/Vue%E7%BB%84%E4%BB%B6%E6%97%A0%E6%B3%95%E7%94%9F%E6%95%88/" rel="prev" title="Vue组件无法生效">
+      <i class="fa fa-chevron-left"></i> Vue组件无法生效
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wrmxx.github.io/2020/06/06/Vue%E6%95%B0%E7%BB%84%E6%B8%B2%E6%9F%93%E4%B9%8B%E5%90%8E-%E5%9C%A8%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/rabbit.jpg">
-      <meta itemprop="name" content="WRM">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WRM">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/06/Vue%E6%95%B0%E7%BB%84%E6%B8%B2%E6%9F%93%E4%B9%8B%E5%90%8E-%E5%9C%A8%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">Vue数组渲染之后-在中间插入元素的渲染过程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-06-06 00:00:00 / 修改时间：20:23:50" itemprop="dateCreated datePublished" datetime="2020-06-06T00:00:00+08:00">2020-06-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index"><span itemprop="name">Vue.js</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        
-          <p>Vue官方推荐我们在使用v-for时，给对应的元素或组件添加上一个:key属性</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/06/06/Vue%E6%95%B0%E7%BB%84%E6%B8%B2%E6%9F%93%E4%B9%8B%E5%90%8E-%E5%9C%A8%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wrmxx.github.io/2020/05/24/hexo%E4%B9%8Bnext%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/rabbit.jpg">
-      <meta itemprop="name" content="WRM">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WRM">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/24/hexo%E4%B9%8Bnext%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD/" class="post-title-link" itemprop="url">hexo之next主题添加评论功能</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-24 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-24T00:00:00+08:00">2020-05-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-06 20:31:24" itemprop="dateModified" datetime="2020-06-06T20:31:24+08:00">2020-06-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">博客搭建</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        
-          <p>1.登录（注册）<a href="https://livere.com/" target="_blank" rel="noopener">来必力官网</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/24/hexo%E4%B9%8Bnext%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wrmxx.github.io/2020/05/19/Git%E5%92%8CGitHub%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/rabbit.jpg">
-      <meta itemprop="name" content="WRM">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WRM">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/19/Git%E5%92%8CGitHub%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Git和GitHub的基本使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-19 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-19T00:00:00+08:00">2020-05-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-06 20:31:59" itemprop="dateModified" datetime="2020-06-06T20:31:59+08:00">2020-06-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        
-          <h2 id="一、Git工作流程"><a href="#一、Git工作流程" class="headerlink" title="一、Git工作流程"></a>一、Git工作流程</h2><p>工作目录-&gt;暂存区-&gt;Git仓库</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/19/Git%E5%92%8CGitHub%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDIxOS8yNjcwOQ=="></div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -602,6 +371,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、入口和出口的配置"><span class="nav-number">1.</span> <span class="nav-text">一、入口和出口的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、webpack局部安装"><span class="nav-number">2.</span> <span class="nav-text">二、webpack局部安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、webpack中使用css文件的配置"><span class="nav-number">3.</span> <span class="nav-text">三、webpack中使用css文件的配置</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -775,6 +545,21 @@
 
   
 
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body>
 </html>
