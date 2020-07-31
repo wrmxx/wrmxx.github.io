@@ -1200,7 +1200,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #202f67;
+  background: #2908ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2462,4 +2462,35 @@ hr {
 }
 .sub-menu .menu-item {
   display: inline-block;
+}
+body {
+  background: url("/images/background1.jpeg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+.header {
+  background-image: linear-gradient(to right, #ffe3e2, #f7eedf, #d9d5d4, #ffe3e2);
+}
+.sidebar {
+  transition-duration: 0.4s;
+  opacity: 0.8;
+}
+.posts-expand .post-title-link {
+  color: #000;
+}
+.index .post-block {
+  background-image: radial-gradient(#fff, #f8f8f8, #e8e8e8, rgba(22,50,98,0.8));
+  border-radius: 8px;
+  box-shadow: 1px 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
+  padding: 30px;
+}
+.post,
+.page,
+.archive .post-block {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 1px 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
+  padding: 40px;
 }
