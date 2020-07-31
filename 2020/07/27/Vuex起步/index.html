@@ -22,7 +22,7 @@
 
   <meta name="description" content="Vuex的作用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vuex起步">
+<meta property="og:title" content="vuex起步">
 <meta property="og:url" content="http://wrmxx.github.io/2020/07/27/Vuex%E8%B5%B7%E6%AD%A5/index.html">
 <meta property="og:site_name" content="WRM">
 <meta property="og:description" content="Vuex的作用">
@@ -55,7 +55,7 @@
   };
 </script>
 
-  <title>Vuex起步 | WRM</title>
+  <title>vuex起步 | WRM</title>
   
 
 
@@ -189,7 +189,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Vuex起步
+          vuex起步
         </h1>
 
         <div class="post-meta">
@@ -236,19 +236,26 @@
         <h2 id="Vuex的作用"><a href="#Vuex的作用" class="headerlink" title="Vuex的作用"></a>Vuex的作用<a id="more"></a></h2><h3 id="1-什么是Vuex？"><a href="#1-什么是Vuex？" class="headerlink" title="1. 什么是Vuex？"></a>1. 什么是Vuex？</h3><p> <em>官方解释：Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。Vuex 也集成到 Vue 的官方调试工具 devtools extension，提供了诸如零配置的 time-travel 调试、状态快照导入导出等高级调试功能。</em><br>我的理解就是：实现某些组件间变量的共享。</p>
 <h3 id="2-为什么不用参数传递而用Vuex呢？"><a href="#2-为什么不用参数传递而用Vuex呢？" class="headerlink" title="2. 为什么不用参数传递而用Vuex呢？"></a>2. 为什么不用参数传递而用Vuex呢？</h3><p> 先来看一个简单的单向数据流的示意：<br> <img src="https://img-blog.csdnimg.cn/20200727150102700.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br> 状态一般会在视图呈现，视图会发生一些事件（click，input……），由此会对状态产生相应的修改。 但是，当遇到多个组件共享状态时，单向数据流的简洁性很容易被破坏。</p>
 <ul>
-<li>传参的方法对于多层嵌套的组件将会非常繁琐，并且对于兄弟组件间的状态传递无能为力。<ul>
-<li>我们经常会采用父子组件直接引用或者通过事件来变更和同步状态的多份拷贝。以上的这些模式非常脆弱，通常会导致无法维护的代码。<h3 id="3-应用场景"><a href="#3-应用场景" class="headerlink" title="3. 应用场景"></a>3. 应用场景</h3>例如：用户的登录状态（ 有些页面/功能只有在用户登录之后才能使用，这时候一般会在网络请求时携带token（令牌），以此来判断用户是否登录），用户的名称、头像、位置、商品的收藏等等在多个页面都能用到的数据<h3 id="4-Vuex-和单纯的全局对象有以下两点不同："><a href="#4-Vuex-和单纯的全局对象有以下两点不同：" class="headerlink" title="4. Vuex 和单纯的全局对象有以下两点不同："></a>4. Vuex 和单纯的全局对象有以下两点不同：</h3></li>
+<li>传参的方法对于多层嵌套的组件将会非常繁琐，并且对于兄弟组件间的状态传递无能为力。</li>
+<li>我们经常会采用父子组件直接引用或者通过事件来变更和同步状态的多份拷贝。以上的这些模式非常脆弱，通常会导致无法维护的代码。</li>
 </ul>
-</li>
-<li>Vuex 的状态存储是响应式的。当 Vue 组件从 store（仓库 ） 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会相应地得到高效更新。<ul>
-<li>不能直接改变 store 中的状态。改变 store 中的状态的唯一途径就是显式地提交 (commit) mutation。<h2 id="使用Vuex"><a href="#使用Vuex" class="headerlink" title="使用Vuex"></a>使用Vuex</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h3>（1）可以在安装脚手架的时候安装vuex<br><img src="https://img-blog.csdnimg.cn/20200727152829548.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>（2）安装脚手架的时候，没有安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vuex --save</span><br></pre></td></tr></table></figure></li>
+<h3 id="3-应用场景"><a href="#3-应用场景" class="headerlink" title="3. 应用场景"></a>3. 应用场景</h3><p> 例如：用户的登录状态（ 有些页面/功能只有在用户登录之后才能使用，这时候一般会在网络请求时携带token（令牌），以此来判断用户是否登录），用户的名称、头像、位置、商品的收藏等等在多个页面都能用到的数据</p>
+<h3 id="4-Vuex-和单纯的全局对象有以下两点不同："><a href="#4-Vuex-和单纯的全局对象有以下两点不同：" class="headerlink" title="4. Vuex 和单纯的全局对象有以下两点不同："></a>4. Vuex 和单纯的全局对象有以下两点不同：</h3><ul>
+<li>Vuex 的状态存储是响应式的。当 Vue 组件从 store（仓库 ） 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会相应地得到高效更新。</li>
+<li>不能直接改变 store 中的状态。改变 store 中的状态的唯一途径就是显式地提交 (commit) mutation。</li>
+</ul>
+<h2 id="使用Vuex"><a href="#使用Vuex" class="headerlink" title="使用Vuex"></a>使用Vuex</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h3><p> （1）可以在安装脚手架的时候安装vuex<br> <img src="https://img-blog.csdnimg.cn/20200727152829548.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>（2）安装脚手架的时候，没有安装<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vuex --save</span><br></pre></td></tr></table></figure></p>
+<ul>
 <li>在src文件夹下新建store文件夹，在该文件夹下新建index.js文件，添加如下代码：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  modules: &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-<li>在main.js文件中引入<br><img src="https://img-blog.csdnimg.cn/20200727154459353.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>如果是在安装脚手架的时候已经安装了vuex，默认会自动配置<h3 id="2-修改store的状态"><a href="#2-修改store的状态" class="headerlink" title="2. 修改store的状态"></a>2. 修改store的状态</h3><img src="https://img-blog.csdnimg.cn/2020072717250484.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>Devtools：vue开发的一个浏览器插件，能够跟踪state每一步被修改的状态，但是Devtools无法跟踪异步操作，这也就是Actions存在的原因。如果直接通过组件修改State，Devtools无法跟踪，所以改变 store 中的状态的唯一途径就是显式地提交  mutation。</li>
+<li>在main.js文件中引入<br><img src="https://img-blog.csdnimg.cn/20200727154459353.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
+</ul>
+<p>如果是在安装脚手架的时候已经安装了vuex，默认会自动配置</p>
+<h3 id="2-修改store的状态"><a href="#2-修改store的状态" class="headerlink" title="2. 修改store的状态"></a>2. 修改store的状态</h3><p><img src="https://img-blog.csdnimg.cn/2020072717250484.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>Devtools：vue开发的一个浏览器插件，能够跟踪state每一步被修改的状态，但是Devtools无法跟踪异步操作，这也就是Actions存在的原因。如果直接通过组件修改State，Devtools无法跟踪，所以改变 store 中的状态的唯一途径就是显式地提交  mutation。</p>
+<ul>
 <li>安装Devtools<br>打开浏览器的扩展程序（以Chrome为例），再打开谷歌应用商店（如果打不开，可以使用极简插件安装）<br><img src="https://img-blog.csdnimg.cn/20200727225150671.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2020072717393653.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
 <li>修改示例<br><img src="https://img-blog.csdnimg.cn/202007272302133.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
 <li>调试<br><img src="https://img-blog.csdnimg.cn/20200727230329973.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
-</ul>
-</li>
 </ul>
 
     </div>
@@ -285,7 +292,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://wrmxx.github.io/2020/07/27/Vuex%E8%B5%B7%E6%AD%A5/" title="Vuex起步">http://wrmxx.github.io/2020/07/27/Vuex起步/</a>
+    <a href="http://wrmxx.github.io/2020/07/27/Vuex%E8%B5%B7%E6%AD%A5/" title="vuex起步">http://wrmxx.github.io/2020/07/27/Vuex起步/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
