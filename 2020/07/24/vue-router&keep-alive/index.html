@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"wrmxx.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="keep-alive：保留组件的状态。">
+  <meta name="description" content="keep-alive：保留组件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue-router&amp;keep-alive">
 <meta property="og:url" content="http://wrmxx.github.io/2020/07/24/vue-router&keep-alive/index.html">
 <meta property="og:site_name" content="WRM">
-<meta property="og:description" content="keep-alive：保留组件的状态。">
+<meta property="og:description" content="keep-alive：保留组件">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200724093939877.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200724094230875.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70">
@@ -229,7 +229,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>keep-alive：保留组件的状态。<a id="more"></a>换句话说，keep-alive是Vue内置的一个组件，可以使被包含的组件保留状态，或者避免重新渲染。</p>
+        <p>keep-alive：保留组件<a id="more"></a>的状态。<!--more-->换句话说，keep-alive是Vue内置的一个组件，可以使被包含的组件保留状态，或者避免重新渲染。</p>
 <ol>
 <li>activated/deactivated函数需要在keep-alive下使用才能生效。</li>
 <li>当存在路由嵌套时，如何保留组件的状态？<br>需要用到beforeRouteLeave(to, from, next){}函数，组件的嵌套情况如下：<br><img src="https://img-blog.csdnimg.cn/20200724093939877.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>在home.vue文件中添加如下代码：<br><img src="https://img-blog.csdnimg.cn/20200724094230875.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1FGUkVY,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>当然，需要把&lt;router-view/&gt;放在&lt;keep-alive&gt;标签中：打开App.vue<br><img src="https://img-blog.csdnimg.cn/2020072409455422.png" alt="在这里插入图片描述"></li>
@@ -382,20 +382,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
