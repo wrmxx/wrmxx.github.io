@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wrmxx.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="基本思想：当页面加载完成后，点击标题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="联动效果——点击标题滚动到对应的内容">
+<meta property="og:url" content="http://wrmxx.github.io/2020/08/25/%E8%81%94%E5%8A%A8%E6%95%88%E6%9E%9C%E2%80%94%E2%80%94%E7%82%B9%E5%87%BB%E6%A0%87%E9%A2%98%E6%BB%9A%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84%E5%86%85%E5%AE%B9/index.html">
+<meta property="og:site_name" content="WRM">
+<meta property="og:description" content="基本思想：当页面加载完成后，点击标题">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200825155629465.png#pic_center">
+<meta property="article:published_time" content="2020-08-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-24T16:00:00.000Z">
+<meta property="article:author" content="WRM">
+<meta property="article:tag" content="Vue.js">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200825155629465.png#pic_center">
+
+<link rel="canonical" href="http://wrmxx.github.io/2020/08/25/%E8%81%94%E5%8A%A8%E6%95%88%E6%9E%9C%E2%80%94%E2%80%94%E7%82%B9%E5%87%BB%E6%A0%87%E9%A2%98%E6%BB%9A%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84%E5%86%85%E5%AE%B9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>联动效果——点击标题滚动到对应的内容 | WRM</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">WRM</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wrmxx.github.io/2020/08/25/%E8%81%94%E5%8A%A8%E6%95%88%E6%9E%9C%E2%80%94%E2%80%94%E7%82%B9%E5%87%BB%E6%A0%87%E9%A2%98%E6%BB%9A%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84%E5%86%85%E5%AE%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rabbit.jpg">
+      <meta itemprop="name" content="WRM">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WRM">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          联动效果——点击标题滚动到对应的内容
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-25 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-25T00:00:00+08:00">2020-08-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index"><span itemprop="name">Vue.js</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>基本思想：当页面加载完成后，点击标题<a id="more"></a>后，获取对应标题内容的offsetTop值，利用scroll的scrollTo滚动到相应位置</p>
+<h2 id="给各组件添加ref属性"><a href="#给各组件添加ref属性" class="headerlink" title="给各组件添加ref属性"></a>给各组件添加ref属性</h2><p>便于获取标题所对应的组件</p>
+<h2 id="新添加data成员"><a href="#新添加data成员" class="headerlink" title="新添加data成员"></a>新添加data成员</h2><h3 id="1-添加data成员"><a href="#1-添加data成员" class="headerlink" title="1. 添加data成员"></a>1. 添加data成员</h3><p>类型：空数组（存储各个组件的offsetTop值）</p>
+<h3 id="2-获取各标题对应的内容的offsetTop，并将其推入数组"><a href="#2-获取各标题对应的内容的offsetTop，并将其推入数组" class="headerlink" title="2. 获取各标题对应的内容的offsetTop，并将其推入数组"></a>2. 获取各标题对应的内容的offsetTop，并将其推入数组</h3><h4 id="获取offsetTop的值出现错误的原因："><a href="#获取offsetTop的值出现错误的原因：" class="headerlink" title="获取offsetTop的值出现错误的原因："></a>获取offsetTop的值出现错误的原因：</h4><p>（1）DOM还未渲染完成<br>（2）DOM已经渲染成，但是组件中的图片还没有加载出来</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>为了避免出现以上问题，所以在DOM渲染完成并且图片已加载的情况下调用各个函数：</p>
+<ol>
+<li>子组件</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"info-list"</span>&gt;</span><br><span class="line">  &lt;img v-<span class="keyword">for</span>=<span class="string">"(item, index) in detailInfo.detailImage[0].list"</span> </span><br><span class="line">  :key=<span class="string">"index"</span> :src=<span class="string">"item"</span> @load=<span class="string">"imgLoad"</span> alt=<span class="string">""</span>&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">    imgLoad() &#123;</span><br><span class="line">       <span class="comment">// 判断, 所有的图片是否都加载完成, 如若加载完成进行一次回调就可以了.</span></span><br><span class="line">       <span class="keyword">if</span> (++<span class="keyword">this</span>.counter === <span class="keyword">this</span>.imagesLength) &#123;</span><br><span class="line">         <span class="keyword">this</span>.$emit(<span class="string">'imageLoad'</span>);</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">   watch: &#123;</span><br><span class="line">    detailInfo() &#123;</span><br><span class="line">      <span class="comment">// 获取图片的个数</span></span><br><span class="line">    	<span class="keyword">this</span>.imagesLength = <span class="keyword">this</span>.detailInfo.detailImage[<span class="number">0</span>].list.length</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>父组件<br>监听子组件传递出的事件<br><img src="https://img-blog.csdnimg.cn/20200825155629465.png#pic_center" alt="在这里插入图片描述"></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> mounted() &#123;</span><br><span class="line">   <span class="comment">// 获取相应的offsetTop值并保存在themeTopY中</span></span><br><span class="line">   <span class="comment">// 将此函数进行防抖处理</span></span><br><span class="line">   <span class="keyword">this</span>.getThemeTopY = debounce(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">     <span class="keyword">this</span>.themeTopY.push(<span class="number">0</span>);</span><br><span class="line">     <span class="keyword">this</span>.themeTopY.push(<span class="keyword">this</span>.$refs.params.$el.offsetTop);</span><br><span class="line">     <span class="keyword">this</span>.themeTopY.push(<span class="keyword">this</span>.$refs.comment.$el.offsetTop);</span><br><span class="line">     <span class="keyword">this</span>.themeTopY.push(<span class="keyword">this</span>.$refs.recommend.$el.offsetTop);</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="keyword">this</span>.themeTopY);</span><br><span class="line">   &#125;);</span><br><span class="line"> &#125;,</span><br><span class="line"></span><br><span class="line">methods: &#123;</span><br><span class="line">   detailImageLoad() &#123;</span><br><span class="line">     <span class="keyword">this</span>.$refs.scroll.refresh();</span><br><span class="line">     <span class="comment">//调用</span></span><br><span class="line">     <span class="keyword">this</span>.getThemeTopY();</span><br><span class="line">   &#125;,</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
+<h2 id="标题点击触发事件"><a href="#标题点击触发事件" class="headerlink" title="标题点击触发事件"></a>标题点击触发事件</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">  detailImageLoad() &#123;</span><br><span class="line">    <span class="keyword">this</span>.$refs.scroll.refresh();</span><br><span class="line">    <span class="keyword">this</span>.getThemeTopY();</span><br><span class="line">  &#125;,</span><br><span class="line">  titleClick(index) &#123;</span><br><span class="line">    <span class="keyword">this</span>.$refs.scroll.scrollTo(<span class="number">0</span>, -<span class="keyword">this</span>.themeTopY[index]);</span><br><span class="line">    <span class="comment">// console.log(index);</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>注意：如果标题点击事件的监听是由子组件完成，需要由子组件传递给父组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//子组件</span></span><br><span class="line">itemClick(index) &#123;</span><br><span class="line">      <span class="keyword">this</span>.currentIndex = index;</span><br><span class="line">      <span class="keyword">this</span>.$emit(<span class="string">"itemClick"</span>, index);</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//父组件</span></span><br><span class="line">&lt;detail-nav-bar <span class="class"><span class="keyword">class</span></span>=<span class="string">"detail-nav-bar"</span> @itemClick=<span class="string">"titleClick"</span>&gt;&lt;<span class="regexp">/detail-nav-bar&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="WRM 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="WRM 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>WRM
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wrmxx.github.io/2020/08/25/%E8%81%94%E5%8A%A8%E6%95%88%E6%9E%9C%E2%80%94%E2%80%94%E7%82%B9%E5%87%BB%E6%A0%87%E9%A2%98%E6%BB%9A%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84%E5%86%85%E5%AE%B9/" title="联动效果——点击标题滚动到对应的内容">http://wrmxx.github.io/2020/08/25/联动效果——点击标题滚到对应的内容/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/16/mixin%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="mixin的使用">
+      <i class="fa fa-chevron-left"></i> mixin的使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/29/HTML5/" rel="next" title="HTML5">
+      HTML5 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDIxOS8yNjcwOQ=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#给各组件添加ref属性"><span class="nav-number">1.</span> <span class="nav-text">给各组件添加ref属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新添加data成员"><span class="nav-number">2.</span> <span class="nav-text">新添加data成员</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-添加data成员"><span class="nav-number">2.1.</span> <span class="nav-text">1. 添加data成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-获取各标题对应的内容的offsetTop，并将其推入数组"><span class="nav-number">2.2.</span> <span class="nav-text">2. 获取各标题对应的内容的offsetTop，并将其推入数组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取offsetTop的值出现错误的原因："><span class="nav-number">2.2.1.</span> <span class="nav-text">获取offsetTop的值出现错误的原因：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现"><span class="nav-number">2.2.2.</span> <span class="nav-text">实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标题点击触发事件"><span class="nav-number">3.</span> <span class="nav-text">标题点击触发事件</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WRM"
+      src="/images/rabbit.jpg">
+  <p class="site-author-name" itemprop="name">WRM</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wrmxx" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wrmxx" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1357262380@qq.com" title="E-Mail → mailto:1357262380@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/QFREX" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;QFREX" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WRM</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+-->
+
+<span id="timeDate">站点运行天数</span>
+<span id="times">运行的时分秒</span>
+<script>
+      var now = new Date(); 
+      function createtime() { 
+          var grt= new Date("05/20/2020 12:00:00");//此处修改你的建站时间或者网站上线时间 
+          now.setTime(now.getTime()+250); 
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+      } 
+  setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,205' opacity='0.8' zIndex='-1' count='125' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
+<!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+
